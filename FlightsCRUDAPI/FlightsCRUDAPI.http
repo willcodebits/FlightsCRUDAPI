@@ -1,0 +1,6 @@
+@FlightsCRUDAPI_HostAddress = http://localhost:5029
+
+GET {{FlightsCRUDAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
