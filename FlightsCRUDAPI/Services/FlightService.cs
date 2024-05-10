@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FlightsCRUDAPI.Services
 {
-    public class FlightService
+    public class FlightService : IFlightService
     {
         private readonly ApplicationDbContext _dbContext;
         private readonly IMapper _mapper;
