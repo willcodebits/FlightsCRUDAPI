@@ -12,7 +12,7 @@
 
     Clean up the program.cs to look like this:
 
-    ```csharp
+```csharp
 
     var builder = WebApplication.CreateBuilder(args);
 
@@ -31,11 +31,11 @@
     }
 
     app.Run();
-    ```
+```
 
     Now add support for the controllers by adding the following two lines on the Program.cs
 
-    ```csharp
+```csharp
 
         var builder = WebApplication.CreateBuilder(args);
 
@@ -61,7 +61,7 @@
 
 
         app.Run();
-    ```
+```
 
 ### Creating project folders
 
@@ -71,7 +71,7 @@
 
     On the Models Folder right click and hit new C# and select class  and name it Flight and it will look like this:
 
-    ```csharp
+```csharp
         using System;
         using System.Collections.Generic;
         using System.Linq;
@@ -84,7 +84,7 @@
 
             }
         }
-    ```
+```
 
     Now we will start by adding some properties on the Flight class
     First we will add an int Id property it will be  used to identify each flight on the database with a unique number
@@ -98,7 +98,7 @@
 
     The final Flight class will look like this:
 
-    ```csharp
+```csharp
         namespace FlightsCRUDAPI.Models
         {
             public class Flight
@@ -120,7 +120,7 @@
                 public int PassengerCapacity { get; set; }
             }
         }
-    ```
+```
 
 ### Adding entity Framework
 
@@ -131,21 +131,21 @@
             Create a connection string
             on appsettings.json add the following
 
-            ```json
+```json
                 "ConnectionStrings": {
                     "DefaultConnection": "Data Source=flights.db"
 
                     },
 
-            ```
+```
 
             On Program.cs before the app variable declaration add the following. Make sure DefaultConnection is the same name as the appsettings.json file ConnectionStrings
 
-    ```csharp
+```csharp
 
     builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-    ```
+```
 
 ### using the tools to create a migration
 
@@ -168,7 +168,7 @@
 
     Create MappingProfile.cs class
 
-    ``` CSharp
+```CSharp
 
         using AutoMapper;
         using FlightsCRUDAPI.Models;
@@ -185,7 +185,7 @@
                 }
             }
         }
-    ```
+```
 
     Register the mapper in program.cs
 
@@ -195,7 +195,7 @@
 
 ### Creating ApiResponseDto
 
-    ```csharp
+```csharp
 
         namespace FlightsCRUDAPI.Models.Dtos
         {
@@ -209,7 +209,7 @@
                 public T? Data { get; set; }
             }
         }
-    ```
+```
 
 ### Creating a service
 
@@ -217,7 +217,7 @@
 
     It should look like this:
 
-    ```csharp
+```csharp
 
         using FlightsCRUDAPI.Models;
         using FlightsCRUDAPI.Models.Dtos;
@@ -235,7 +235,7 @@
             }
         }
 
-    ```
+```
 
     On the Services Folder create a file called FlightsService.cs
 
@@ -249,7 +249,7 @@
 
     Your code should look like this:
 
-    ```csharp
+```csharp
         using AutoMapper;
         using FlightsCRUDAPI.Data;
         using Microsoft.EntityFrameworkCore;
@@ -268,12 +268,11 @@
                 }
             }
         }
-    ```
+```
 
     Now we will create the GetAllFlightsMethod
 
-
-        ```csharp
+```csharp
 
 
         public async Task<ApiResponseDto<List<Flight>?>> GetAllFlights()
@@ -305,7 +304,7 @@
 
 
 
-        ```
+```
 
         This method, `GetAllFlights`, is an asynchronous method that retrieves all `Flight` entities from the database and wraps the result in an `ApiResponseDto`.
 
@@ -323,8 +322,7 @@
 
     Then we will continue with the GetFlightById method
 
-
-    ```csharp
+```csharp
 
 
         public async Task<ApiResponseDto<Flight?>> GetFlightById(int id)
@@ -366,7 +364,7 @@
 
 
 
-    ```
+```
 
         This method, `GetFlightById`, is an asynchronous method that retrieves a `Flight` entity with a specific ID from the database and wraps the result in an `ApiResponseDto`.
 
@@ -386,7 +384,7 @@
 
     Then we will focus on the CreateFlight method
 
-    ```csharp
+```csharp
 
 
         public async Task<ApiResponseDto<Flight?>> CreateFlight(FlightApiRequest apiRequestDto)
@@ -421,7 +419,7 @@
         }
 
 
-    ```
+```
 
         This method, `CreateFlight`, is an asynchronous method that creates a new `Flight` entity in the database based on the provided `FlightApiRequest` DTO (Data Transfer Object), and wraps the result in an `ApiResponseDto`.
 
@@ -444,8 +442,7 @@
 
     Were almost done with the crud methods, now let's work on UpdateFlight
 
-
-        ```csharp
+```csharp
 
 
         public async Task<ApiResponseDto<Flight?>> UpdateFlight(int id, FlightApiRequest flightToUpdateDto)
@@ -519,8 +516,7 @@
         }
 
 
-        ```
-
+```
 
         This method, `UpdateFlight`, is an asynchronous method that updates a `Flight` entity in the database with the provided `FlightApiRequest` DTO (Data Transfer Object), and wraps the result in an `ApiResponseDto`.
 
@@ -544,7 +540,7 @@
 
     Finally we will tackle the delete method
 
-    ```csharp
+```csharp
 
 
         public async Task<ApiResponseDto<Flight?>> DeleteFlight(int id)
@@ -606,8 +602,7 @@
         }
 
 
-    ```
-
+```
 
         This method, `DeleteFlight`, is an asynchronous method that deletes a `Flight` entity from the database based on the provided ID, and wraps the result in an `ApiResponseDto`.
 
@@ -631,7 +626,7 @@
 
 ### Register our service on program.cs
 
-    ```csharp
+```csharp
 
         using FlightsCRUDAPI.Data;
         using FlightsCRUDAPI.Services;
@@ -668,7 +663,7 @@
 
 
 
-    ```
+```
 
 ### Creating the controller
 
@@ -676,7 +671,7 @@
 
     inside we will use dependency injection to inject our service so we can forward our request objects to service for processing
 
-    ```csharp
+```csharp
 
     using FlightsCRUDAPI.Services;
 
@@ -694,7 +689,7 @@
         }
     }
 
-    ```
+```
 
         This is a controller class in an ASP.NET Core application. Here's a breakdown of what it does:
 
@@ -716,7 +711,7 @@
 
 #### Let's start by creating our GetAll Endpoint
 
-    ```csharp
+```csharp
 
         [HttpGet]
         public async Task<ActionResult<ApiResponseDto<List<Flight>>>> GetAllFlights()
@@ -737,7 +732,7 @@
 
         }
 
-    ```
+```
 
         This method, `GetAllFlights`, is an asynchronous method that retrieves all `Flight` entities from the database and wraps the result in an `ApiResponseDto`.
 
@@ -763,7 +758,7 @@
 
 #### Creating the GetByID method
 
-    ```csharp
+```csharp
 
         [HttpGet("{id}")]
         public async Task<ActionResult<ApiResponseDto<Flight?>>> GetFlightById(int id)
@@ -783,7 +778,7 @@
             return new ObjectResult(response);
         }
 
-    ```
+```
 
         This method, `GetFlightById`, is an asynchronous method that retrieves a `Flight` entity from the database based on the provided ID and wraps the result in an `ApiResponseDto`.
 
@@ -809,7 +804,7 @@
 
 #### Creating the CreateFlight endpoint
 
-    ```csharp
+```csharp
 
         [HttpPost]
         public async Task<ActionResult<ApiResponseDto<Flight?>>> CreateFlight(FlightApiRequest apiRequestDto)
@@ -824,7 +819,7 @@
             return new ObjectResult(response);
         }
 
-    ```
+```
 
         This method, `CreateFlight`, is an asynchronous method that creates a new `Flight` entity in the database based on the provided `FlightApiRequest` and wraps the result in an `ApiResponseDto`.
 
@@ -846,7 +841,7 @@
 
 #### Create the UpateFlight method
 
-    ```csharp
+```csharp
 
         [HttpPut("{id}")]
         public async Task<ActionResult<ApiResponseDto<Flight?>>> UpdateFlight(int id, FlightApiRequest apiRequestDto)
@@ -866,7 +861,7 @@
             return new ObjectResult(response);
         }
 
-    ```
+```
 
         This method, `UpdateFlight`, is an asynchronous method that updates an existing `Flight` entity in the database based on the provided ID and `FlightApiRequest`, and wraps the result in an `ApiResponseDto`.
 
@@ -892,7 +887,7 @@
 
 #### Creating the delete method
 
-    ```csharp
+```csharp
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<ApiResponseDto<Flight?>>> DeleteFlight(int id)
@@ -912,7 +907,7 @@
             return new ObjectResult(response);
         }
 
-    ```
+```
 
         This method, `DeleteFlight`, is an asynchronous method that deletes an existing `Flight` entity in the database based on the provided ID and wraps the result in an `ApiResponseDto`.
 
